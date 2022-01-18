@@ -1,14 +1,20 @@
 // Define all html objects as variables
 var startBtn = document.getElementById('start-btn');
 var nextBtn = document.getElementById('next-btn');
-var introEl = document.getElementById('intro')
+var introEl = document.getElementById('intro');
 var questionContainer = document.getElementById('question-container');
 var questionEl = document.getElementById('question');
 var answerBtnEl = document.getElementById('answer-buttons');
+var headerEl = document.getElementById('header');
+var timerEl = document.querySelector('.timer-count');
+var scoreEl = document.querySelector('.score');
 
 //Define variables to be used in js
 let randomQuestion = [];
 let currentQuestion = [];
+let timer;
+let timerCount;
+let scoreCounter;
 
 // Array of questions and associated answers
 const questions = [
@@ -40,21 +46,21 @@ const questions = [
         ]
     },
     {
-        question: "How is it?",
+        question: "What does DOM stand for?",
         answers: [
-            { text: "Yes", correct:true },
-            { text: "No", correct:false },
-            { text: "Maybe", correct:false },
-            { text: "Yar", correct:false },
+            { text: "Designated Object Mode", correct:false },
+            { text: "Design Original Model", correct:false },
+            { text: "Document Object Model", correct:true },
+            { text: "Don't Objectify Monkeys", correct:false },
         ]
     },
     {
-        question: "How is it?",
+        question: "Which method combines the text of two strings and returns a new string?",
         answers: [
-            { text: "Yes", correct:true },
-            { text: "No", correct:false },
-            { text: "Maybe", correct:false },
-            { text: "Yar", correct:false },
+            { text: "concat()", correct:true },
+            { text: "append()", correct:false },
+            { text: "combine()", correct:false },
+            { text: "attach()", correct:false },
         ]
     }
 ]
@@ -69,6 +75,11 @@ nextBtn.addEventListener('click', () => {
 
 //game starts -> randomize questions then show question
 function startGame() {
+    timerCount = 30;
+    timerEl.textContent = 30;
+    scoreCounter = 0;
+    scoreEl.textContent = scoreCounter;
+    headerEl.classList.remove('hidden')
     startBtn.classList.add('hidden');
     introEl.classList.add('hidden')
     questionContainer.classList.remove('hidden');
@@ -77,8 +88,29 @@ function startGame() {
     // console.log(question)
     currentQuestion = 0;
     nextQuestion()
+    startTimer()
+} 
+
+function startTimer() {
+  timer = setInterval(function() {
+    timerCount--;
+    timerEl.textContent = timerCount;
+    if (timerCount === 0) {
+      clearInterval(timer);
+      endGame();
+    }
+  }, 1000);
 }
 
+//Game ends if out of time, asks for restart
+function endGame() {
+    reset()
+    questionEl.innerText = "Sorry, you have run out of time. Please hit 'Restart' to try again."
+    startBtn.classList.remove('hidden')
+    startBtn.innerText = "Restart"
+}
+
+// for next button, create a function that clears the card and shows next random question
 function nextQuestion () {
     reset()
     showQuestion(randomQuestion[currentQuestion])
@@ -91,6 +123,7 @@ function showQuestion(question) {
         button.classList.add('btn');
         if (answer.correct === true){
             button.dataset.correct = answer.correct;
+            
         };
         button.innerText = answer.text;
         answerBtnEl.appendChild(button);
@@ -105,18 +138,32 @@ function reset() {
     }
 }
 
+
 function selectAnswer (i) {
     var selectedBtn = i.target;
-    var correctBtn = selectedBtn.dataset.correct;
+    var correct = selectedBtn.dataset.correct;
+    if (selectedBtn.dataset.correct == true){ 
+        scoreCounter = scoreCounter + 20;
+        scoreEl.textContent = scoreCounter;
+    }
+
+    setBtnClass(document.body, correct)
     // correctAnswer()
     Array.from(answerBtnEl.children).forEach(button => {
         setBtnClass(button, button.dataset.correct)
     })
+
+    if (correct){ 
+        scoreCounter = scoreCounter + 20;
+        scoreEl.textContent = scoreCounter;
+    }
+
     if (randomQuestion.length > currentQuestion + 1) {
         nextBtn.classList.remove('hidden')
     }
-    else {
-        startBtn.innerText = ""
+    else { 
+        startBtn.classList.remove('hidden')
+        startBtn.innerText = "Restart"
     }
     
 }

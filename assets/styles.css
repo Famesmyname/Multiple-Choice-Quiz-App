@@ -29,7 +29,15 @@ body {
     background-color: #596172;
     border-radius: 10px;
     padding: 10px;
+}
 
+.container header .title {
+    font-size: 2rem;
+    align-self: flex-start;
+}
+
+.container header .timer {
+    align-self: flex-end;
 }
 
 .btn-grid {
