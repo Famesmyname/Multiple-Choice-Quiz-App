@@ -1,6 +1,7 @@
 // Define all html objects as variables
 var startBtn = document.getElementById('start-btn');
 var nextBtn = document.getElementById('next-btn');
+var saveScoreBtn = document.getElementById('save-btn');
 var introEl = document.getElementById('intro');
 var questionContainer = document.getElementById('question-container');
 var questionEl = document.getElementById('question');
@@ -8,6 +9,8 @@ var answerBtnEl = document.getElementById('answer-buttons');
 var headerEl = document.getElementById('header');
 var timerEl = document.querySelector('.timer-count');
 var scoreEl = document.querySelector('.score');
+var userName = document.querySelector('#user-name')
+var highScoreList = document.getElementById('high-score-list')
 
 //Define variables to be used in js
 let randomQuestion = [];
@@ -15,6 +18,8 @@ let currentQuestion = [];
 let timer;
 let timerCount;
 let scoreCounter;
+let userInitials;
+let highScore = [];
 
 // Array of questions and associated answers
 const questions = [
@@ -72,6 +77,7 @@ nextBtn.addEventListener('click', () => {
     nextQuestion()
 })
 
+saveScoreBtn.addEventListener('click', saveScore)
 
 //game starts -> randomize questions then show question
 function startGame() {
@@ -139,7 +145,7 @@ function reset() {
 }
 
 
-function selectAnswer (i) {
+function selectAnswer(i) {
     var selectedBtn = i.target;
     var correct = selectedBtn.dataset.correct;
     if (selectedBtn.dataset.correct == true){ 
@@ -162,11 +168,31 @@ function selectAnswer (i) {
         nextBtn.classList.remove('hidden')
     }
     else { 
-        startBtn.classList.remove('hidden')
+        startBtn.classList.remove('hidden');
+        userName.classList.remove('hidden');
+        saveScoreBtn.classList.remove('hidden');
         startBtn.innerText = "Restart"
+        localStorage.setItem('recentScore', scoreCounter);
+
     }
-    
 }
+
+function saveScore(e) {
+    const recentScore = localStorage.getItem('recentScore')
+    var score = {
+        score: recentScore,
+        name: userName.value,
+    }
+
+    highScore.push(score);
+    highScore.sort((a,b) => b.score - a.score);
+    highScore.splice(5);
+    localStorage.setItem('highScore', JSON.stringify(highScore));
+   
+    highScore = JSON.parse(localStorage.getItem('highScore'))
+    highScoreList.innerHTML = highScore;
+};
+
 
 function setBtnClass (element, correct) {
     clearBtnClass(element)

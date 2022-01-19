@@ -12,7 +12,7 @@
 --correctColor: green;
 }
 
-body {
+body{
     padding: 0;
     margin: 0;
     display: flex;
@@ -21,7 +21,27 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--backgroundColor);
+}
 
+.high-scores {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input {
+    margin-bottom: 1rem;
+    width: 10rem;
+    padding: 1rem;
+    font-size: 1rem;
+    border: none;
+    box-shadow: 0 0.2rem 1.5rem 0;
 }
 
 .container {
@@ -39,6 +59,7 @@ body {
 .container header .timer {
     align-self: flex-end;
 }
+
 
 .btn-grid {
     display: grid;
@@ -61,7 +82,7 @@ body {
     color:var(--fontLight)
 }
 
-.start-btn, .next-btn {
+.start-btn, .next-btn, .score-btn {
     font-size: 1rem;
     font-weight: bolder;
     padding: 10px 15px;
@@ -71,6 +92,10 @@ body {
     display:flex;
     justify-content: center;
     align-items: center;
+}
+
+.username {
+    align-self:center;
 }
 
 .hidden {
