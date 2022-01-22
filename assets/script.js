@@ -78,14 +78,13 @@ nextBtn.addEventListener('click', () => {
     currentQuestion++
     nextQuestion()
 })
-
 saveScoreBtn.addEventListener('click', saveScore)
 
 //game starts -> randomize questions then show question
 function startGame() {
     reset()
-    timerCount = 30;
-    timerEl.textContent = 30;
+    timerCount = 60;
+    timerEl.textContent = 60;
     scoreCounter = 0;
     scoreEl.textContent = scoreCounter;
     headerEl.classList.remove('hidden');
@@ -170,6 +169,10 @@ function selectAnswer(i) {
         scoreEl.textContent = scoreCounter;
     }
 
+    if (!correct){
+        timerCount
+    }
+
     if (randomQuestion.length > currentQuestion + 1) {
         nextBtn.classList.remove('hidden')
     }
@@ -199,7 +202,9 @@ function saveScore(e) {
     highScore.sort((a,b) => b.score - a.score);
     highScore.splice(5);
     localStorage.setItem('highScore', JSON.stringify(highScore));
+    saveScoreBtn.classList.add('hidden');
     renderHighScores ()
+    
 };
 
 //Function to render the stored score and name array as a list item
@@ -207,7 +212,7 @@ function renderHighScores (){
     var highScore = JSON.parse(localStorage.getItem('highScore'))
     console.log(highScore)
     highScoreList.innerHTML = highScore.map(score => {
-        return `<li class="high-score">${score.name}-${score.score}</li>`
+        return `<li class="high-score">${score.name} : ${score.score} pts</li>`
     }).join("");
 }
 

@@ -3,7 +3,7 @@
     font-family: 'Days One', sans-serif;
 }
 
-//Chose colors influenced by Nike Sports Bra
+/* Chose colors influenced by Nike Sports Bra */
 :root {
 --backgroundColor: #242933;
 --btnColor: #EC4C56;
@@ -11,9 +11,6 @@
 --fontDark: black;
 --wrongColor: red;
 --correctColor: green;
-}
-
-body {
 }
 
 main {
@@ -32,7 +29,7 @@ main {
     height: 12vh;
 }
 
-.high-score {
+.high-score>* {
     display:inline;
 }
 
@@ -123,7 +120,7 @@ input {
 }
 
 
-/* Following two button classes are used by javascript to show right and wrong answers */
+/* Following two button classes are used by javascript to show right and wrong */
 button.correct {
     background: var(--correctColor);
 }
