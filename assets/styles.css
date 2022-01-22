@@ -13,6 +13,10 @@
 --correctColor: green;
 }
 
+body {
+    background-color: #242933;
+}
+
 main {
     padding: 0;
     margin: 0;
@@ -21,7 +25,7 @@ main {
     height: 85vh;
     justify-content: center;
     align-items: center;
-    background-color: var(--backgroundColor);
+    background-color: #242933;
 }
 
 /* The high score section is at the bottom of the screen with new high scores added horizontally */
@@ -84,18 +88,18 @@ input {
 }
 
 .btn {
-    background-color: var(--btnColor);
-    border: 2px solid hsl(--btnColor, 100%, 50%);
+    background-color: #EC4C56;
+    border: 2px solid hsl(#EC4C56, 100%, 50%);
     border-radius: 5px;
     padding: 10px 15px;
-    color: var(--fontDark)
+    color: black;
     
 }
 
 /* Button hover helps with readability */
 .btn:hover {
     border-color: white;
-    color:var(--fontLight)
+    color:white;
 }
 
 .start-btn, .next-btn, .score-btn {
@@ -122,9 +126,9 @@ input {
 
 /* Following two button classes are used by javascript to show right and wrong */
 button.correct {
-    background: var(--correctColor);
+    background: green;
 }
 
 button.wrong {
-    background: var(--wrongColor);
+    background: red;
 }
