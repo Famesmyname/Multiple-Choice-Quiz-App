@@ -10,7 +10,8 @@ var headerEl = document.getElementById('header');
 var timerEl = document.querySelector('.timer-count');
 var scoreEl = document.querySelector('.score');
 var userName = document.querySelector('#user-name')
-var highScoreList = document.getElementById('high-score-list')
+var highScoreList = document.querySelector('#high-score-list')
+var allBtn = document.querySelector('.btn')
 
 //Define variables to be used in js
 let randomQuestion = [];
@@ -19,6 +20,7 @@ let timer;
 let timerCount;
 let scoreCounter;
 let userInitials;
+let scores = [];
 let highScore = [];
 
 // Array of questions and associated answers
@@ -81,13 +83,17 @@ saveScoreBtn.addEventListener('click', saveScore)
 
 //game starts -> randomize questions then show question
 function startGame() {
+    reset()
     timerCount = 30;
     timerEl.textContent = 30;
     scoreCounter = 0;
     scoreEl.textContent = scoreCounter;
-    headerEl.classList.remove('hidden')
+    headerEl.classList.remove('hidden');
     startBtn.classList.add('hidden');
-    introEl.classList.add('hidden')
+    introEl.classList.add('hidden');
+    userName.classList.add('hidden');
+    saveScoreBtn.classList.add('hidden');
+    
     questionContainer.classList.remove('hidden');
     randomQuestion = questions.sort(() => Math.random() - .5);
     // console.log(randomQuestion)
@@ -101,7 +107,7 @@ function startTimer() {
   timer = setInterval(function() {
     timerCount--;
     timerEl.textContent = timerCount;
-    if (timerCount === 0) {
+    if (timerCount < 1 ) {
       clearInterval(timer);
       endGame();
     }
@@ -144,7 +150,7 @@ function reset() {
     }
 }
 
-
+// When answer is sellected it checks correctness, sets the correct answer to green, wrong answers to red, then checks next question else it ends the game and moves on to high score
 function selectAnswer(i) {
     var selectedBtn = i.target;
     var correct = selectedBtn.dataset.correct;
@@ -168,32 +174,45 @@ function selectAnswer(i) {
         nextBtn.classList.remove('hidden')
     }
     else { 
+        clearInterval(timer)
         startBtn.classList.remove('hidden');
         userName.classList.remove('hidden');
         saveScoreBtn.classList.remove('hidden');
-        startBtn.innerText = "Restart"
+        questionEl.innerText = "Please enter your name to save your high score!"
+        while (answerBtnEl.firstChild){
+            answerBtnEl.removeChild(answerBtnEl.firstChild)
+        }
+        startBtn.innerText = "Restart";
         localStorage.setItem('recentScore', scoreCounter);
-
     }
 }
-
+// Function saves the score to local storage, it then keeps adding the scores to local storage but only keeps the top 5 scores
 function saveScore(e) {
     const recentScore = localStorage.getItem('recentScore')
+    // console.log(recentScore)
+    // console.log(userName.value)
     var score = {
         score: recentScore,
         name: userName.value,
     }
-
     highScore.push(score);
     highScore.sort((a,b) => b.score - a.score);
     highScore.splice(5);
     localStorage.setItem('highScore', JSON.stringify(highScore));
-   
-    highScore = JSON.parse(localStorage.getItem('highScore'))
-    highScoreList.innerHTML = highScore;
+    renderHighScores ()
 };
 
+//Function to render the stored score and name array as a list item
+function renderHighScores (){
+    var highScore = JSON.parse(localStorage.getItem('highScore'))
+    console.log(highScore)
+    highScoreList.innerHTML = highScore.map(score => {
+        return `<li class="high-score">${score.name}-${score.score}</li>`
+    }).join("");
+}
 
+
+// This function sets the wrong answer buttons to red and correct answer buttons to green
 function setBtnClass (element, correct) {
     clearBtnClass(element)
     if (correct) {
@@ -204,6 +223,8 @@ function setBtnClass (element, correct) {
     }
 }
 
+
+// This function clears the red and green coloring of buttons
 function clearBtnClass(element) {
     element.classList.remove('correct')
     element.classList.remove('wrong')

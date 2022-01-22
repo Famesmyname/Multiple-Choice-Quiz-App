@@ -3,6 +3,7 @@
     font-family: 'Days One', sans-serif;
 }
 
+//Chose colors influenced by Nike Sports Bra
 :root {
 --backgroundColor: #242933;
 --btnColor: #EC4C56;
@@ -12,21 +13,38 @@
 --correctColor: green;
 }
 
-body{
+body {
+}
+
+main {
     padding: 0;
     margin: 0;
     display: flex;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 85vh;
     justify-content: center;
     align-items: center;
     background-color: var(--backgroundColor);
 }
 
+/* The high score section is at the bottom of the screen with new high scores added horizontally */
 .high-scores {
-    align-items: flex-start;
-    justify-content: flex-start;
+    height: 12vh;
 }
+
+.high-score {
+    display:inline;
+}
+
+.high-score li {
+    display: inline;
+    padding: 10px 10px;
+}
+
+.high-score li:hover {
+    font-weight: bold;
+}
+
 
 form {
     width: 100%;
@@ -45,7 +63,7 @@ input {
 }
 
 .container {
-    max-width: 75%;
+    max-width: 100%;
     background-color: #596172;
     border-radius: 10px;
     padding: 10px;
@@ -77,6 +95,7 @@ input {
     
 }
 
+/* Button hover helps with readability */
 .btn:hover {
     border-color: white;
     color:var(--fontLight)
@@ -98,10 +117,13 @@ input {
     align-self:center;
 }
 
+/* This class is used a lot in the Javascript to hide and unhide elements */
 .hidden {
     display:none;
 }
 
+
+/* Following two button classes are used by javascript to show right and wrong answers */
 button.correct {
     background: var(--correctColor);
 }
