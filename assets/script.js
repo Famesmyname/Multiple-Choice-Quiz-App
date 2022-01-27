@@ -12,6 +12,7 @@ var scoreEl = document.querySelector('.score');
 var userName = document.querySelector('#user-name')
 var highScoreList = document.querySelector('#high-score-list')
 var allBtn = document.querySelector('.btn')
+var resetScoreBtn = document.querySelector('reset-score')
 
 //Define variables to be used in js
 let randomQuestion = [];
@@ -22,6 +23,7 @@ let scoreCounter;
 let userInitials;
 let scores = [];
 let highScore = [];
+highScore = JSON.parse(localStorage.getItem('highScore'))
 
 // Array of questions and associated answers
 const questions = [
@@ -79,6 +81,7 @@ nextBtn.addEventListener('click', () => {
     nextQuestion()
 })
 saveScoreBtn.addEventListener('click', saveScore)
+resetScoreBtn.addEventListener('click', clearHighScores)
 
 //game starts -> randomize questions then show question
 function startGame() {
@@ -169,8 +172,9 @@ function selectAnswer(i) {
         scoreEl.textContent = scoreCounter;
     }
 
+    // 
     if (!correct){
-        timerCount
+        timerCount = timerCount - 10
     }
 
     if (randomQuestion.length > currentQuestion + 1) {
@@ -209,10 +213,10 @@ function saveScore(e) {
 
 //Function to render the stored score and name array as a list item
 function renderHighScores (){
-    var highScore = JSON.parse(localStorage.getItem('highScore'))
+    highScore = JSON.parse(localStorage.getItem('highScore'))
     console.log(highScore)
     highScoreList.innerHTML = highScore.map(score => {
-        return `<li class="high-score">${score.name} : ${score.score} pts</li>`
+        return `<li class="high-score">${score.name} - ${score.score} pts</li>`
     }).join("");
 }
 
@@ -234,3 +238,11 @@ function clearBtnClass(element) {
     element.classList.remove('correct')
     element.classList.remove('wrong')
 }
+
+function clearHighScores (){
+    highScore = [],
+    localStorage.setItem('highScore', JSON.stringify(highScore));
+    renderHighScores()
+}
+
+renderHighScores()

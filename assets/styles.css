@@ -29,7 +29,7 @@ main {
 }
 
 /* The high score section is at the bottom of the screen with new high scores added horizontally */
-.high-scores {
+.high-score {
     height: 12vh;
 }
 
@@ -131,4 +131,8 @@ button.correct {
 
 button.wrong {
     background: red;
+}
+
+.high-score btn {
+    float: right;
 }
