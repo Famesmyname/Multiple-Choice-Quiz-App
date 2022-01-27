@@ -43,5 +43,6 @@ The color scheme was inspired by Nike gray sports bra.
 ## Version History
 
 1.0     -Release version with requested features and functionality
-1.1     -Added penalty of 10 seconds off the clock for wrong answers (JS 173-175)
-        -Have highscore render after page is refresh which pulls saved scores. (JS 25,241)
+1.1     -Added penalty of 10 seconds off the clock for wrong answers (JS 178-180)
+        -Have highscore render after page is refresh which pulls saved scores. (JS 27-28)
+        -Added a clear score button to clear the high score (JS 244-249)

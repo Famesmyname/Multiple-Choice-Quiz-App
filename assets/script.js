@@ -12,7 +12,7 @@ var scoreEl = document.querySelector('.score');
 var userName = document.querySelector('#user-name')
 var highScoreList = document.querySelector('#high-score-list')
 var allBtn = document.querySelector('.btn')
-var resetScoreBtn = document.querySelector('reset-score')
+var resetScoreBtn = document.getElementById('reset-score-btn')
 
 //Define variables to be used in js
 let randomQuestion = [];
@@ -23,7 +23,9 @@ let scoreCounter;
 let userInitials;
 let scores = [];
 let highScore = [];
+
 highScore = JSON.parse(localStorage.getItem('highScore'))
+renderHighScores()
 
 // Array of questions and associated answers
 const questions = [
@@ -240,9 +242,9 @@ function clearBtnClass(element) {
 }
 
 function clearHighScores (){
-    highScore = [],
+    console.log("Clear Check")
+    highScore = [];
     localStorage.setItem('highScore', JSON.stringify(highScore));
-    renderHighScores()
+    renderHighScores();
 }
 
-renderHighScores()
